@@ -38,9 +38,9 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6"
           >
-            Fullstack Developer
+            I'm Ayla Khalifa
             <br />
-            <span className="text-gradient">&amp; Content Creator</span>
+            <span className="text-gradient">&amp; arsitektur</span>
           </motion.h1>
 
           <motion.p
