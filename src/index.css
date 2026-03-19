@@ -15,17 +15,17 @@
     --popover: 0 0% 100%;
     --popover-foreground: 220 20% 10%;
 
-    --primary: 175 80% 40%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 175 80% 50%;
+    --primary-foreground: 175 80% 50%;
 
     --secondary: 220 15% 92%;
     --secondary-foreground: 220 20% 20%;
 
-    --muted: 237 80% 40%;
-    --muted-foreground: 237 80% 40%;
+    --muted: 168 80% 50%;
+    --muted-foreground: 168 80% 50%;
 
-    --accent: 175 80% 45%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 175 80% 50%;
+    --accent-foreground: 175 80% 50%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -37,10 +37,10 @@
     --radius: 0.75rem;
 
     /* Custom tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(237, 80%, 40%), hsl(225, 80%, 50%));
+    --gradient-primary: linear-gradient(135deg, hsl(183, 74%, 65%), hsl(180, 71%, 60%));
     --gradient-hero: linear-gradient(180deg, hsl(210 20% 98%) 0%, hsl(210 25% 94%) 100%);
-    --navbg: linear-gradient(180deg, hsl(313, 58%, 61%) 0%, hsl(321, 74%, 62%) 100%);
-    --shadow-glow: 0 0 40px hsl(175 80% 40% / 0.3);
+    --navbg: linear-gradient(180deg, hsl(173, 58%, 61%) 0%, hsl(169, 74%, 62%) 100%);
+    --shadow-glow: 0 0 40px hsla(295, 78%, 55%, 0.3);
     --shadow-card: 0 4px 20px hsl(220 20% 10% / 0.08);
     --shadow-card-hover: 0 8px 30px hsl(220 20% 10% / 0.12);
 
@@ -65,7 +65,7 @@
     --popover-foreground: 210 20% 98%;
 
     --primary: 175 80% 50%;
-    --primary-foreground: 220 25% 6%;
+    --primary-foreground: 175 80% 50%;
 
     --secondary: 220 20% 18%;
     --secondary-foreground: 210 20% 90%;
@@ -74,7 +74,7 @@
     --muted-foreground: 168 80% 50%;
 
     --accent: 175 80% 50%;
-    --accent-foreground: 220 25% 6%;
+    --accent-foreground: 175 80% 50%;
 
     --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 100%;
@@ -84,10 +84,10 @@
     --ring: 175 80% 50%;
 
     /* Custom tokens dark */
-    --gradient-primary: linear-gradient(135deg, hsl(168, 80%, 50%), hsl(174, 80%, 60%));
-    --gradient-hero: linear-gradient(180deg, hsl(220 25% 6%) 0%, hsl(220 30% 10%) 100%);
-    --navbg: linear-gradient(180deg, hsl(292, 55%, 57%) 0%, hsl(304, 51%, 58%) 100%);
-    --shadow-glow: 0 0 60px hsl(175 80% 50% / 0.4);
+    --gradient-primary: linear-gradient(135deg, hsl(174, 80%, 71%), hsl(180, 85%, 74%));
+    --gradient-hero: linear-gradient(180deg, hsl(300, 27%, 6%) 0%, hsl(220 30% 10%) 100%);
+    --navbg: linear-gradient(180deg, hsl(173, 55%, 57%) 0%, hsl(179, 51%, 58%) 100%);
+    --shadow-glow: 0 0 60px hsla(295, 85%, 59%, 0.4);
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
     --shadow-card-hover: 0 8px 30px hsl(175 80% 50% / 0.15);
 
