@@ -42,6 +42,25 @@ const contactInfo = [
   },
 ];
 
+// ANIMATION VARIANTS
+const container = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 40 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: 'easeOut' },
+  },
+};
+
 export default function ContactSection() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -74,7 +93,6 @@ export default function ContactSection() {
 
     if (!result.success) {
       const fieldErrors: Partial<FormData> = {};
-
       result.error.errors.forEach((err) => {
         const field = err.path[0] as keyof FormData;
         if (field) fieldErrors[field] = err.message;
@@ -120,31 +138,41 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-20 md:py-32">
       <div className="container mx-auto px-4">
-        
+
         {/* HEADER */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-2 block">Kontak</span>
+          <span className="text-primary font-medium mb-2 block">
+            Kontak
+          </span>
           <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
             Hubungi Saya
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto"
+        >
+
           {/* INFO */}
           <div className="space-y-4">
             {contactInfo.map((info) => {
               const Icon = info.icon;
               return (
-                <a
+                <motion.a
+                  variants={item}
+                  whileHover={{ scale: 1.05, y: -4 }}
+                  whileTap={{ scale: 0.97 }}
                   key={info.label}
                   href={info.href}
-                  className="flex items-center gap-4 p-4 glass rounded-xl"
+                  className="flex items-center gap-4 p-4 glass rounded-xl transition"
                 >
                   <div className="p-3 rounded-lg bg-primary/10">
                     <Icon className="h-5 w-5 text-primary" />
@@ -153,48 +181,56 @@ export default function ContactSection() {
                     <p className="text-sm text-muted-foreground">{info.label}</p>
                     <p className="font-medium">{info.value}</p>
                   </div>
-                </a>
+                </motion.a>
               );
             })}
           </div>
 
           {/* FORM */}
-          <form onSubmit={handleSubmit} className="space-y-6 p-6 glass rounded-2xl">
-            
+          <motion.form
+            variants={item}
+            onSubmit={handleSubmit}
+            className="space-y-6 p-6 glass rounded-2xl"
+          >
+
             <InputField label="Nama" name="name" value={formData.name} onChange={handleChange} error={errors.name} />
             <InputField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} error={errors.email} />
             <InputField label="Subjek" name="subject" value={formData.subject} onChange={handleChange} error={errors.subject} />
 
             <div>
               <label className="text-sm font-medium">Pesan</label>
-              <Textarea
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                rows={5}
-                className={errors.message ? 'border-destructive' : ''}
-              />
+              <motion.div whileFocus={{ scale: 1.02 }}>
+                <Textarea
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={5}
+                  className={errors.message ? 'border-destructive' : ''}
+                />
+              </motion.div>
               {errors.message && (
                 <p className="text-xs text-destructive">{errors.message}</p>
               )}
             </div>
 
-            <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <>
-                  <Loader2 className="animate-spin mr-2" />
-                  Membuka Email...
-                </>
-              ) : (
-                <>
-                  <Send className="mr-2" />
-                  Kirim via Email
-                </>
-              )}
-            </Button>
+            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="animate-spin mr-2" />
+                    Membuka Email...
+                  </>
+                ) : (
+                  <>
+                    <Send className="mr-2" />
+                    Kirim via Email
+                  </>
+                )}
+              </Button>
+            </motion.div>
 
-          </form>
-        </div>
+          </motion.form>
+        </motion.div>
       </div>
     </section>
   );
@@ -219,16 +255,21 @@ function InputField({
   type = 'text',
 }: InputFieldProps) {
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+    >
       <label className="text-sm font-medium">{label}</label>
-      <Input
-        name={name}
-        type={type}
-        value={value}
-        onChange={onChange}
-        className={error ? 'border-destructive' : ''}
-      />
+      <motion.div whileFocus={{ scale: 1.02 }}>
+        <Input
+          name={name}
+          type={type}
+          value={value}
+          onChange={onChange}
+          className={error ? 'border-destructive' : ''}
+        />
+      </motion.div>
       {error && <p className="text-xs text-destructive">{error}</p>}
-    </div>
+    </motion.div>
   );
 }
