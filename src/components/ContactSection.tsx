@@ -77,9 +77,7 @@ export default function ContactSection() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-
     setFormData((prev) => ({ ...prev, [name]: value }));
-
     if (errors[name as keyof FormData]) {
       setErrors((prev) => ({ ...prev, [name]: '' }));
     }
@@ -97,7 +95,6 @@ export default function ContactSection() {
         const field = err.path[0] as keyof FormData;
         if (field) fieldErrors[field] = err.message;
       });
-
       setErrors(fieldErrors);
       return;
     }
@@ -118,12 +115,7 @@ export default function ContactSection() {
         description: 'Silakan kirim email melalui aplikasi email Anda.',
       });
 
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: '',
-      });
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch {
       toast({
         title: 'Gagal',
@@ -136,50 +128,58 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32">
+    <section id="contact" className="py-20 md:py-32 bg-background/50">
       <div className="container mx-auto px-4">
-
         {/* HEADER */}
         <motion.div
           initial={{ opacity: 0, y: 60 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <span className="text-primary font-medium mb-2 block">
-            Kontak
+          <span className="text-primary font-medium mb-2 block tracking-wider uppercase text-sm">
+            Hubungi Kami
           </span>
-          <h2 className="font-display text-3xl md:text-5xl font-bold mb-4">
-            Hubungi Saya
+          <h2 className="font-display text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            Mari Berkolaborasi
           </h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">
+            Punya ide atau pertanyaan? Saya siap mendengarkan dan membantu Anda.
+          </p>
         </motion.div>
 
         <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
+          viewport={{ once: true }}
           className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto"
         >
-
-          {/* INFO */}
+          {/* INFO CARDS */}
           <div className="space-y-4">
             {contactInfo.map((info) => {
               const Icon = info.icon;
               return (
                 <motion.a
                   variants={item}
-                  whileHover={{ scale: 1.05, y: -4 }}
-                  whileTap={{ scale: 0.97 }}
                   key={info.label}
                   href={info.href}
-                  className="flex items-center gap-4 p-4 glass rounded-xl transition"
+                  whileHover={{ 
+                    scale: 1.02, 
+                    x: 10,
+                    backgroundColor: "rgba(var(--primary-rgb), 0.05)",
+                    boxShadow: "0 10px 30px -15px rgba(0,0,0,0.2)"
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex items-center gap-5 p-5 glass border border-white/10 rounded-2xl transition-all duration-300 group"
                 >
-                  <div className="p-3 rounded-lg bg-primary/10">
-                    <Icon className="h-5 w-5 text-primary" />
+                  <div className="p-4 rounded-xl bg-primary/10 group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                    <Icon className="h-6 w-6" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">{info.label}</p>
-                    <p className="font-medium">{info.value}</p>
+                    <p className="text-xs uppercase tracking-widest text-muted-foreground font-semibold">{info.label}</p>
+                    <p className="text-lg font-medium group-hover:text-primary transition-colors">{info.value}</p>
                   </div>
                 </motion.a>
               );
@@ -190,45 +190,53 @@ export default function ContactSection() {
           <motion.form
             variants={item}
             onSubmit={handleSubmit}
-            className="space-y-6 p-6 glass rounded-2xl"
+            className="space-y-6 p-8 glass border border-white/10 rounded-3xl shadow-2xl relative overflow-hidden"
           >
-
-            <InputField label="Nama" name="name" value={formData.name} onChange={handleChange} error={errors.name} />
-            <InputField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} error={errors.email} />
-            <InputField label="Subjek" name="subject" value={formData.subject} onChange={handleChange} error={errors.subject} />
-
-            <div>
-              <label className="text-sm font-medium">Pesan</label>
-              <motion.div whileFocus={{ scale: 1.02 }}>
-                <Textarea
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={5}
-                  className={errors.message ? 'border-destructive' : ''}
-                />
-              </motion.div>
-              {errors.message && (
-                <p className="text-xs text-destructive">{errors.message}</p>
-              )}
+            <div className="grid grid-cols-1 gap-6">
+              <InputField label="Nama Lengkap" name="name" value={formData.name} onChange={handleChange} error={errors.name} />
+              <InputField label="Alamat Email" name="email" type="email" value={formData.email} onChange={handleChange} error={errors.email} />
+              <InputField label="Subjek" name="subject" value={formData.subject} onChange={handleChange} error={errors.subject} />
+              
+              <div className="space-y-2">
+                <label className="text-sm font-semibold ml-1">Pesan</label>
+                <motion.div whileFocus={{ scale: 1.01 }}>
+                  <Textarea
+                    name="message"
+                    placeholder="Tulis pesan Anda di sini..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={5}
+                    className={`bg-background/50 focus:ring-2 focus:ring-primary/20 transition-all duration-300 rounded-xl ${errors.message ? 'border-destructive' : 'border-white/20'}`}
+                  />
+                </motion.div>
+                {errors.message && (
+                  <p className="text-xs text-destructive mt-1 italic">{errors.message}</p>
+                )}
+              </div>
             </div>
 
-            <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-              <Button type="submit" className="w-full rounded-full" disabled={isSubmitting}>
+            <motion.div 
+              whileHover={{ scale: 1.02 }} 
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button 
+                type="submit" 
+                className="w-full h-14 rounded-xl text-lg font-bold shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all duration-300" 
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="animate-spin mr-2" />
-                    Membuka Email...
+                    <Loader2 className="animate-spin mr-2 h-5 w-5" />
+                    Mengirim...
                   </>
                 ) : (
                   <>
-                    <Send className="mr-2" />
-                    Kirim via Email
+                    <Send className="mr-2 h-5 w-5" />
+                    Kirim Pesan Sekarang
                   </>
                 )}
               </Button>
             </motion.div>
-
           </motion.form>
         </motion.div>
       </div>
@@ -236,7 +244,7 @@ export default function ContactSection() {
   );
 }
 
-/* INPUT COMPONENT */
+/* IMPROVED INPUT COMPONENT */
 type InputFieldProps = {
   label: string;
   name: keyof FormData;
@@ -246,30 +254,24 @@ type InputFieldProps = {
   type?: string;
 };
 
-function InputField({
-  label,
-  name,
-  value,
-  onChange,
-  error,
-  type = 'text',
-}: InputFieldProps) {
+function InputField({ label, name, value, onChange, error, type = 'text' }: InputFieldProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-    >
-      <label className="text-sm font-medium">{label}</label>
-      <motion.div whileFocus={{ scale: 1.02 }}>
+    <div className="space-y-2">
+      <label className="text-sm font-semibold ml-1">{label}</label>
+      <motion.div 
+        whileFocus={{ scale: 1.01 }}
+        className="relative group"
+      >
         <Input
           name={name}
           type={type}
           value={value}
           onChange={onChange}
-          className={error ? 'border-destructive' : ''}
+          placeholder={`Masukkan ${label.toLowerCase()}...`}
+          className={`h-12 bg-background/50 border-white/20 focus:ring-2 focus:ring-primary/20 transition-all duration-300 rounded-xl ${error ? 'border-destructive' : 'group-hover:border-primary/50'}`}
         />
       </motion.div>
-      {error && <p className="text-xs text-destructive">{error}</p>}
-    </motion.div>
+      {error && <p className="text-xs text-destructive mt-1 italic">{error}</p>}
+    </div>
   );
 }

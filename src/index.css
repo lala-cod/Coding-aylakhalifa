@@ -38,7 +38,7 @@
 
     /* Custom tokens */
     --gradient-primary: linear-gradient(135deg, hsl(183, 74%, 65%), hsl(180, 71%, 60%));
-    --gradient-hero: linear-gradient(180deg, hsl(182, 38%, 71%) 0%, hsl(168, 45%, 72%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(164, 95%, 77%) 0%, hsl(174, 98%, 79%) 100%);
     --navbg: linear-gradient(180deg, hsl(143, 31%, 41%) 0%, hsl(148, 39%, 38%) 100%);
     --shadow-glow: 0 0 40px hsla(295, 78%, 55%, 0.3);
     --shadow-card: 0 4px 20px hsl(220 20% 10% / 0.08);
@@ -123,7 +123,7 @@
   }
   .text-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: var(--navbg);
+    background-image: var(--gradient-primary);
   }
 
   .bg-gradient-hero {
